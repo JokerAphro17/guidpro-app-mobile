@@ -64,6 +64,8 @@ flutter:
     - assets/img/logo-android.png
     - assets/img/logo-ios.png
     - assets/img/help.png
+    - assets/img/gp_guidepro.png
+    - assets/img/gp.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

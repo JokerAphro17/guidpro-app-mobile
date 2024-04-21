@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:guidpro_mobile/views/auth/login.dart';
+import 'package:guidpro_mobile/views/auth/signup.dart';
 import 'package:guidpro_mobile/views/board.dart';
 
 void main() {
@@ -17,6 +19,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const Board(),
+      routes: {
+        '/login': (context) =>  LoginScreen(),
+        '/signup': (context) =>  SignUpScreen(),
+      },
 
     );
   }
