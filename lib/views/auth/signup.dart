@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:guidpro_mobile/constants/Theme.dart';
+import 'package:guidpro_mobile/controllers/signup_controller.dart';
+import 'package:guidpro_mobile/models/sign_up_model.dart';
 import 'package:guidpro_mobile/views/widgets/buttons.dart';
-
-void main() {
-  runApp(MaterialApp(
-    title: 'Guide Pro',
-    theme: ThemeData(
-      primarySwatch: Colors.blue,
-    ),
-    home: SignUpScreen(),
-  ));
-}
 
 class SignUpScreen extends StatelessWidget {
   @override
@@ -19,18 +11,21 @@ class SignUpScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('INSCRIPTION'),
       ),
-      body: SignUpForm(),
+      body: SingleChildScrollView(
+        child: LoginForm(),
+      ),
     );
   }
 }
 
-class SignUpForm extends StatefulWidget {
+class LoginForm extends StatefulWidget {
   @override
-  _SignUpFormState createState() => _SignUpFormState();
+  _LoginFormState createState() => _LoginFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _LoginFormState extends State<LoginForm> {
   bool _obscureText = true;
+  bool _obscureText2 = true;
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -38,18 +33,51 @@ class _SignUpFormState extends State<SignUpForm> {
     });
   }
 
+  void _togglePasswordVisibility2() {
+    setState(() {
+      _obscureText2 = !_obscureText2;
+    });
+  }
+  SignUpController signUpController = SignUpController();
+
+  void _onSignUpButtonPressed() {
+    signUpFormModel.fullName = fullNameController.text;
+    signUpFormModel.email = emailController.text;
+    signUpFormModel.phone = phoneController.text;
+    signUpFormModel.password = passwordController.text;
+    signUpFormModel.confirmPassword = confirmPasswordController.text;
+
+    signUpController.submitForm(signUpFormModel);
+
+  }
+
+  SignUpFormModel signUpFormModel = SignUpFormModel(
+    fullName: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',
+  );
+
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView( // Wrap with SingleChildScrollView
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: SizedBox(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             // Logo Image
             Container(
-              width: 200,
-              height: 200,
+              width: 100,
+              height: 100,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
@@ -59,61 +87,62 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
             ),
             SizedBox(height: 20.0),
-            // First Name Input Field
-            RoundedInputField(
-              icon: Icons.person,
-              hintText: 'Prénom',
-            ),
-            SizedBox(height: 20.0),
-            // Last Name Input Field
-            RoundedInputField(
-              icon: Icons.person,
-              hintText: 'Nom',
-            ),
-            SizedBox(height: 20.0),
-            // Phone Number Input Field
-            RoundedInputField(
-              icon: Icons.phone,
-              hintText: 'Numéro de téléphone',
-              keyboardType: TextInputType.phone,
-            ),
-            SizedBox(height: 20.0),
             // Email Input Field
             RoundedInputField(
+              icon: Icons.person,
+              hintText: 'Nom complet',
+              controller: fullNameController,
+            ),
+            SizedBox(height: 20.0),
+            RoundedInputField(
               icon: Icons.email,
+              controller: emailController,
               hintText: 'Email',
+            ),
+            SizedBox(height: 20.0),
+            RoundedInputField(
+              icon: Icons.phone,
+              controller: phoneController,
+              hintText: 'Numéro de téléphone',
+              keyboardType: TextInputType.phone,
+
             ),
             SizedBox(height: 20.0),
             // Password Input Field
             RoundedInputField(
               icon: Icons.lock,
               hintText: 'Mot de passe',
+              controller: passwordController,
               obscureText: _obscureText,
               suffixIcon: IconButton(
-                icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+                icon: Icon(
+                  _obscureText ? Icons.visibility : Icons.visibility_off,
+                ),
                 onPressed: _togglePasswordVisibility,
               ),
             ),
             SizedBox(height: 20.0),
-            // Confirm Password Input Field
             RoundedInputField(
               icon: Icons.lock,
+              controller: confirmPasswordController,
               hintText: 'Confirmer le mot de passe',
               obscureText: _obscureText,
               suffixIcon: IconButton(
-                icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
-                onPressed: _togglePasswordVisibility,
+                icon: Icon(
+                  _obscureText2 ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: _togglePasswordVisibility2,
               ),
             ),
             SizedBox(height: 20.0),
-            // Sign Up Button
+            // Password Forgot Button
+            // Sign In Button
             CustomTextButton(
-              text: 'INSCRIPTION',
+              text: 'CONNEXION',
               backgroundColor: MaterialColors.black,
               textColor: MaterialColors.white,
               onPressed: () {
-                // Add your logic for the onPressed callback
-                print('Sign Up button pressed');
+                _onSignUpButtonPressed();
               },
             ),
           ],
@@ -128,14 +157,18 @@ class RoundedInputField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final Widget? suffixIcon;
-  final TextInputType? keyboardType;
+  // keyboarType: TextInputType.emailAddress,
+  final TextInputType keyboardType;
+  final TextEditingController controller;
+
 
   const RoundedInputField({
     required this.icon,
     required this.hintText,
     this.obscureText = false,
     this.suffixIcon,
-    this.keyboardType,
+    this.keyboardType = TextInputType.text,
+    required this.controller,
   });
 
   @override
@@ -149,11 +182,12 @@ class RoundedInputField extends StatelessWidget {
       child: TextField(
         obscureText: obscureText,
         keyboardType: keyboardType,
+        controller: controller,
         decoration: InputDecoration(
           prefixIcon: Icon(icon),
           hintText: hintText,
-          suffixIcon: suffixIcon,
           border: InputBorder.none,
+          suffixIcon: suffixIcon,
         ),
       ),
     );

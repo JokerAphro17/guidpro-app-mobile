@@ -21,7 +21,7 @@ class CustomTextButton extends StatelessWidget {
         backgroundColor: backgroundColor,
       ),
       child: SizedBox(
-        width: 250,
+        width: 235,
         child: Center(
           child: Text(
             text,
