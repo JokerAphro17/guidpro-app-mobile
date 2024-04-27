@@ -4,6 +4,7 @@ class CustomTextButton extends StatelessWidget {
   final Function()? onPressed;
   final Color backgroundColor;
   final Color textColor;
+  final bool isLoading;
 
   const CustomTextButton({
     Key? key,
@@ -11,6 +12,7 @@ class CustomTextButton extends StatelessWidget {
     required this.onPressed,
     required this.backgroundColor,
     required this.textColor,
+    this.isLoading = false,
   }) : super(key: key);
 
   @override
@@ -23,10 +25,18 @@ class CustomTextButton extends StatelessWidget {
       child: SizedBox(
         width: 235,
         child: Center(
-          child: Text(
-            text,
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: textColor),
-          ),
+          child: isLoading
+              ? CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(textColor),
+                )
+              : Text(
+                  text,
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
         ),
       ),
     );

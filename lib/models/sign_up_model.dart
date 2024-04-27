@@ -1,3 +1,5 @@
+import 'package:guidpro_mobile/api/client.dart';
+
 class SignUpFormModel {
 
   // Properties
@@ -16,7 +18,16 @@ class SignUpFormModel {
     required this.confirmPassword,
   });
 
-
+  // Methods
+  Map<String, dynamic> toJson() {
+    return {
+      'fullName': fullName,
+      'email': email,
+      'phone': phone,
+      'password': password,
+      'confirmPassword': confirmPassword,
+    };
+  }
 
 
 }
