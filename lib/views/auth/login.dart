@@ -5,8 +5,10 @@ import 'package:guidpro_mobile/controllers/signin_controller.dart';
 import 'package:guidpro_mobile/models/signin_model.dart';
 
 class LoginScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('CONNEXION'),
@@ -40,8 +42,6 @@ class _LoginFormState extends State<LoginForm> {
     email: '',
     password: '',
   );
-
-
 
 
   void _onLoginButtonPressed() async {
