@@ -3,6 +3,7 @@ import 'package:guidpro_mobile/constants/Theme.dart';
 import 'package:guidpro_mobile/views/widgets/buttons.dart';
 import 'package:guidpro_mobile/controllers/signin_controller.dart';
 import 'package:guidpro_mobile/models/signin_model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginScreen extends StatelessWidget {
 
@@ -55,11 +56,32 @@ class _LoginFormState extends State<LoginForm> {
        setState(() {
          _isLoggingIn = false;
        });
+       Fluttertoast.showToast(
+          msg: 'Connexion réussie',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+
+        Navigator.pushReplacementNamed(context, '/home');
+
 
      }, (e) {
        setState(() {
          _isLoggingIn = false;
        });
+        Fluttertoast.showToast(
+            msg: 'Echec de la connexion: ${e['message']}',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
 
      });
 
