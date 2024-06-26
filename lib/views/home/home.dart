@@ -9,6 +9,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final isAuthenticated = false;
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,42 +51,50 @@ class ArticleItem extends StatelessWidget {
           height: 200,
           // width: 90%,
           width: double.infinity,
-          decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.black,
-              ),
-              borderRadius: const BorderRadius.all(Radius.circular(20))
-          ),
-
-
-
         ),
         // overlay
-
         Positioned(
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
           child: Container(
-            color: Colors.black.withOpacity(0.5),
+            decoration: BoxDecoration(
+                // add image https://flutter.dev/docs/cookbook/images/network-image
+                 image: const DecorationImage(
+                   image: NetworkImage('https://media.istockphoto.com/id/543212762/photo/tractor-cultivating-field-at-spring.webp?b=1&s=612x612&w=0&k=20&c=OEKSWztY_quFD-ixXGvCiSp1zlHBsXzDugCnyQf6ERM='),
+                  fit: BoxFit.cover,
+                ),
+
+                border: Border.all(
+                  color: Colors.black,
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(20))
+            ),
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
+              textBaseline: TextBaseline.alphabetic,
               children: [
-                Text(
-                  'Elevage de bovins',
-                  style: TextStyle(
-                    color: MaterialColors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    'Elevage de Bovin',
+                    style: TextStyle(
+                      color: MaterialColors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                Text(
-                  'Article Description',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    'Description',
+                    style: TextStyle(
+                      color: MaterialColors.white,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
               ],

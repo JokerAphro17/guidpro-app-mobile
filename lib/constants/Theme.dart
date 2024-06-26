@@ -35,4 +35,9 @@ class MaterialColors {
 
   // white color
   static const Color white = Color.fromRGBO(241, 237, 237, 0.9294117647058824);
+
 }
+
+
+
+
