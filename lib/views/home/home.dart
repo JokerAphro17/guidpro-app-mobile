@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:guidpro_mobile/constants/Theme.dart';
+import 'package:guidpro_mobile/views/widgets/article.dart';
+import 'package:guidpro_mobile/views/widgets/searchBox.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -27,7 +29,17 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: ArticleList(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            SearchBox(),
+            Expanded(
+              child: ArticleList(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
