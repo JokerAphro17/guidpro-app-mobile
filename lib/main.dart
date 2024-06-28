@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
       final storage = FlutterSecureStorage();
-      return  MaterialApp(
+      return  MaterialApp( 
         title: 'Guide Pro',
         theme: ThemeData(
           primarySwatch: Colors.blue,
