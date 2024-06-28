@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:guidpro_mobile/constants/Theme.dart';
 
@@ -39,7 +40,15 @@ class ArticleCard extends StatelessWidget {
               image: DecorationImage(
                 image: NetworkImage('https://via.placeholder.com/150'),
                 fit: BoxFit.cover,
+
                 
+              ),
+
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomRight: Radius.circular(10),
               ),
             )
           ),

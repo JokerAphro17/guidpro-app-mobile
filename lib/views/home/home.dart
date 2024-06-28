@@ -1,58 +1,45 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:guidpro_mobile/constants/Theme.dart';
-import 'package:guidpro_mobile/views/widgets/article.dart';
-import 'package:guidpro_mobile/views/widgets/searchBox.dart';
+import 'package:guidpro_mobile/views/articles/decouverte.dart';
+import 'package:guidpro_mobile/views/home/home.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+
+// tab bar
 class Home extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _TabsState createState() => _TabsState();
 }
 
-class _HomeState extends State<Home> {
-  final isAuthenticated = false;
-
+class _TabsState extends State<Home> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-
-              Navigator.pushReplacementNamed(context, '/login');
-            },
+    return DefaultTabController(
+      length: 2,
+      
+      animationDuration: Duration(milliseconds: 500),
+      child: Scaffold(
+        appBar: AppBar(
+      
+          bottom: const TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.search), text: 'Découverte'),
+              Tab(icon: Icon(Icons.save), text: 'Sauvegarde'),
+            ],
           ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
+        ),
+        body: TabBarView(
           children: [
-            SearchBox(),
-            Expanded(
-              child: ArticleList(),
-            ),
+            Decouverte(),
+            Center(
+          child: LoadingAnimationWidget.fourRotatingDots(color: Colors.blueGrey, size: 50),
+        ),
           ],
         ),
       ),
     );
   }
 }
-
-class ArticleList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 6,
-      itemBuilder: (context, index) {
-        return ArticleItem();
-      },
-    );
-  }
-}
-
