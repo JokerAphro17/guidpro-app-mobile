@@ -10,6 +10,7 @@ class ArticleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        
         Navigator.pushNamed(context, '/article');
       },
       child: Padding(

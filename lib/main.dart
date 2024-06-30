@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guidpro_mobile/views/articles/show.dart';
 import 'package:guidpro_mobile/views/auth/login.dart';
 import 'package:guidpro_mobile/views/auth/signup.dart';
 import 'package:guidpro_mobile/views/board.dart';
@@ -27,6 +28,8 @@ class MyApp extends StatelessWidget {
           '/login': (context) =>  LoginScreen(),
           '/signup': (context) =>  SignUpScreen(),
           '/home': (context) =>  Home(),
+          '/board': (context) =>  Board(),
+          '/article': (context) =>  ArticleShow(),
           
         },
 
