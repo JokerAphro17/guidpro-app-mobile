@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClient {
   final Dio _dio = Dio();
-  static const String baseUrl = 'http://192.168.1.104:9000/api';
+  static const String baseUrl = 'http://192.168.1.77:9000/api';
   final FlutterSecureStorage storage = new FlutterSecureStorage();
 
   ApiClient() {
@@ -44,6 +44,7 @@ class ApiClient {
   Future<Map<String, dynamic>> fetchData(String endpoint) async {
     try {
       final response = await _dio.get(endpoint);
+      print('Response: $response');
       return response.data;
     } catch (e) {
       throw Exception('Failed to fetch data: $e');

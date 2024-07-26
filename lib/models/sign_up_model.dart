@@ -1,4 +1,3 @@
-import 'package:guidpro_mobile/api/client.dart';
 
 class SignUpFormModel {
 

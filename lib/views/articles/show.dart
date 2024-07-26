@@ -67,7 +67,7 @@ class ArticleShow extends StatelessWidget {
                       child: Column(
                         children: [
                           Icon(Icons.person, color: const Color.fromARGB(255, 221, 82, 82), size: 50),
-                          Text(''
+                          Text('ghh', style: TextStyle(color: Color.fromRGBO(0, 0, 0, 0.8), fontSize: 10, fontWeight: FontWeight.bold)),
                         ],
                       ),
                     )

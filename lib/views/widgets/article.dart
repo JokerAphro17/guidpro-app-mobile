@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:guidpro_mobile/constants/Theme.dart';
+import 'package:guidpro_mobile/models/article.dart';
 
 
 class ArticleItem extends StatelessWidget {
+  final Advice advice;
+
+  ArticleItem({required this.advice});
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -15,7 +19,7 @@ class ArticleItem extends StatelessWidget {
       },
       child: Padding(
         padding: const EdgeInsets.all(1.0),
-        child: ArticleCard(),
+        child: ArticleCard(advice: advice),
       ),
     );
   }
@@ -25,6 +29,10 @@ class ArticleItem extends StatelessWidget {
 
 
 class ArticleCard extends StatelessWidget {
+   final Advice advice;
+
+  ArticleCard({required this.advice});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -37,121 +45,124 @@ class ArticleCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               color: Colors.black.withOpacity(0.5),
             ),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage('https://via.placeholder.com/150'),
+                image: NetworkImage(advice.coverUrl),
                 fit: BoxFit.cover,
-
-                
               ),
-
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 bottomLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
                 bottomRight: Radius.circular(10),
               ),
-            )
+            ),
           ),
-          const Expanded(
-            
+           Expanded(
             child: Padding(
               padding: EdgeInsets.zero,
-              
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
                 mainAxisSize: MainAxisSize.min,
-                
-                
-                children: [  
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text(
-                    'Elevage de poules pondeuses',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                // categorie
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
-                  child: Text(
-                    'Domaine: Agriculture',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color.fromARGB(255, 99, 99, 99),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
-                  child: Text(
-                    'Budget départ: 13 000 000 FCFA',
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: Colors.grey,
-                      overflow: TextOverflow.ellipsis,
-                      
-                    ),
-                  ),
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
-                      child: Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                        size: 15,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(
+                      advice.title,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
-                      child: Text(
-                        '4.5',
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.grey,
-                        ),
+                  ),
+                  // categorie
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
+                    child: Text(
+                      'Domaine: Agriculture',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Color.fromARGB(255, 99, 99, 99),
                       ),
                     ),
-                    Spacer(),
-                    // view
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
-                      child: Icon(
-                        Icons.remove_red_eye,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
+                    child: Text(
+                      'Budget départ: '+advice.budget.toString()+' FCFA',
+                      style: TextStyle(
+                        fontSize: 10,
                         color: Colors.grey,
-                        size: 15,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
-                      child: Text(
-                        '12',
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.grey,
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
+                        child: Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                          size: 15,
                         ),
                       ),
-                    ),
-                    Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
-                      child: Text(
-                        '12/12/2021',
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.grey,
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
+                        child: Text(
+                          '4.5',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                
+                      
+                      // view
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
+                        child: Icon(
+                          Icons.remove_red_eye,
+                          color: Colors.grey,
+                          size: 15,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
+                        child: Text(
+                          '12',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
+                        child: Icon(
+                          Icons.calendar_today,
+                          color: Colors.grey,
+                          size: 15,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 2.0),
+                        child: Text(
+                          '12/12/2021',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                     
+                    ],
+                  )
                 ],
               ),
             ),
@@ -161,3 +172,4 @@ class ArticleCard extends StatelessWidget {
     );
   }
 }
+             

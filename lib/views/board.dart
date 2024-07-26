@@ -37,7 +37,7 @@ class Board extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Profitez de l\'expérience des experts, afin de vous réussir vos aisements, vos projets...',
+                      'Profitez de conaeils avisés des expert afin de reussir vos projets agricoles',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
