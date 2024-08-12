@@ -13,7 +13,35 @@ class Board extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset('assets/img/help.png'),
+              // design the image with degradient overlay white to transparent bottom to top
+              Stack(
+                children: <Widget>[
+                  Container(
+                    height: 400,
+                    decoration: BoxDecoration(
+                      image: const DecorationImage(
+                        image: AssetImage('assets/img/wsw.jpg.avif'),
+                        fit: BoxFit.cover,
+                      ),
+                      
+                    ),
+                  ),
+                  Container(
+                    height: 400,
+                    // gradient overlay
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: <Color>[
+                          Color.fromARGB(154, 255, 255, 255).withOpacity(1),
+                          MaterialColors.black.withOpacity(0.0),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               Container(
                 padding: const EdgeInsets.all(20),
                 width: double.infinity,

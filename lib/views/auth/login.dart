@@ -69,12 +69,12 @@ class _LoginFormState extends State<LoginForm> {
         Navigator.pushReplacementNamed(context, '/home');
 
 
-     }, (e) {
+     }, () {
        setState(() {
          _isLoggingIn = false;
        });
         Fluttertoast.showToast(
-            msg: 'Echec de la connexion: ${e['message']}',
+            msg: 'Echec de la connexion: Email ou mot de passe incorrect',
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,

@@ -23,13 +23,23 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Board(),
+        home: () {
+          final token = storage.read(key: 'token');
+
+          if (token == null) {
+            return Board();
+          } else {
+            return Board();
+          }
+        }(),
+
+
         routes: {
           '/login': (context) =>  LoginScreen(),
           '/signup': (context) =>  SignUpScreen(),
           '/home': (context) =>  Home(),
           '/board': (context) =>  Board(),
-          '/article': (context) =>  ArticleShow(),
+          
           
         },
 

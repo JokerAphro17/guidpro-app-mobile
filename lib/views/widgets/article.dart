@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:guidpro_mobile/constants/Theme.dart';
 import 'package:guidpro_mobile/models/article.dart';
+import 'package:guidpro_mobile/views/articles/show.dart';
 
 
 class ArticleItem extends StatelessWidget {
@@ -15,7 +16,12 @@ class ArticleItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         
-        Navigator.pushNamed(context, '/article');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ArticleShow(advice: advice),
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.all(1.0),

@@ -3,13 +3,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClient {
   final Dio _dio = Dio();
-  static const String baseUrl = 'http://192.168.1.77:9000/api';
+  static const String baseUrl = 'http://192.168.1.65:9000/api';
   final FlutterSecureStorage storage = new FlutterSecureStorage();
 
   ApiClient() {
     _dio.options.baseUrl = baseUrl;
     _dio.options.connectTimeout = 5000; // 5 seconds
     _dio.options.receiveTimeout = 5000; // 5 seconds
+    // time ou 
+    
     //token
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {

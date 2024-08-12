@@ -46,12 +46,14 @@ class Section {
   final String id;
   final String title;
   final String description;
+  final String content;
   final String createdAt;
   final String updatedAt;
 
   Section({
     required this.id,
     required this.title,
+    required this.content,
     required this.description,
     required this.createdAt,
     required this.updatedAt,
@@ -60,6 +62,7 @@ class Section {
   factory Section.fromJson(Map<String, dynamic> json) {
     return Section(
       id: json['id'],
+      content: json['content'],
       title: json['title'],
       description: json['description'],
       createdAt: json['createdAt'],
