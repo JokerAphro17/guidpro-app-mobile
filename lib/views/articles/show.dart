@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guidpro_mobile/api/client.dart';
 import 'package:guidpro_mobile/helpers/helper.dart';
 import 'package:guidpro_mobile/models/article.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
@@ -135,6 +136,12 @@ class ArticleShow extends StatelessWidget {
                       content: section.content,
                     ))
                 .toList(),
+            Divider(),
+            AdviserInfo(
+              adviserName: "Jean",
+              adviserRole: "Conseiller en Agriculture",
+              adviserContact: "d"
+            ),
             CommentSection(comments: [
               Comment(
                 username: "Jean",
@@ -475,3 +482,132 @@ class _LikeableInfoCardState extends State<LikeableInfoCard> {
     );
   }
 }
+
+class AdviserInfo extends StatefulWidget {
+  final String adviserName;
+  final String adviserRole;
+  final String adviserContact;
+
+  AdviserInfo({
+    required this.adviserName,
+    required this.adviserRole,
+    required this.adviserContact,
+  });
+
+  @override
+  _AdviserInfoState createState() => _AdviserInfoState();
+}
+
+class _AdviserInfoState extends State<AdviserInfo> {
+  bool _isExpanded = false;
+  bool _showConsultationForm = false;
+  final TextEditingController _consultationController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.all(8.0),
+      child: Container(
+        color: _isExpanded ? Colors.white : Colors.grey[300], // Change background color based on expansion state
+        child: Column(
+          children: [
+            ListTile(
+              title: Text(
+                'Information du Conseiller',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onTap: () {
+                setState(() {
+                  _isExpanded = !_isExpanded;
+                });
+              },
+              trailing: IconButton(
+                icon: Icon(_isExpanded ? Icons.expand_less : Icons.expand_more),
+                onPressed: () {
+                  setState(() {
+                    _isExpanded = !_isExpanded;
+                  });
+                },
+              ),
+            ),
+            if (_isExpanded)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Nom: ${widget.adviserName}'),
+                    SizedBox(height: 4),
+                    Text('Cabinet: EXPOTEC (Coopérative)'),
+                    SizedBox(height: 4),
+                    Text("Domaine d'expertise: Agriculture - agriculture durable"),
+                    Text('Adresse: Ouagadougou, Burkina Faso'),
+                    SizedBox(height: 4),
+                    Text('Contact: +226 70 00 00 00'),
+                    SizedBox(height: 4),
+                    Text('Email: expo@tec.com'),
+                    SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _showConsultationForm = !_showConsultationForm;
+                        });
+                      },
+                      child: Text('Demande de consultation'),
+                    ),
+                    if (_showConsultationForm) ...[
+                      SizedBox(height: 16),
+                      TextField(
+                        controller: _consultationController,
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                          hintText: "Entrez le motif de consultation...",
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                _showConsultationForm = false;
+                                _consultationController.clear();
+                              });
+                            },
+                            child: Text('Annuler'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              String motif = _consultationController.text;
+                              if (motif.isNotEmpty) {
+                                print('Motif de consultation: $motif');
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Demande envoyée')),
+                                );
+                                setState(() {
+                                  _showConsultationForm = false;
+                                  _consultationController.clear();
+                                });
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Veuillez entrer un motif')),
+                                );
+                              }
+                            },
+                            child: Text('Envoyer'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+

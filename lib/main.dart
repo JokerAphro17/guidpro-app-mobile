@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:guidpro_mobile/views/articles/show.dart';
 import 'package:guidpro_mobile/views/auth/login.dart';
 import 'package:guidpro_mobile/views/auth/signup.dart';
 import 'package:guidpro_mobile/views/board.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:guidpro_mobile/views/drawer/profile.dart';
 import 'package:guidpro_mobile/views/home/home.dart';
 
 void main() {
@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
           '/signup': (context) =>  SignUpScreen(),
           '/home': (context) =>  Home(),
           '/board': (context) =>  Board(),
+          '/profile': (context) =>  ProfileScreen(),
           
           
         },
