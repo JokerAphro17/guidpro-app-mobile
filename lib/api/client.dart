@@ -3,8 +3,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClient {
   final Dio _dio = Dio();
-  // static const String baseUrl = 'https://guid-pro.ntc-faso.com/api';
-  static const String baseUrl = 'http://192.168.1.71:9000/api';
+  static const String baseUrl = 'https://guid-pro.ntc-faso.com/api';
+  // static const String baseUrl = 'http://192.168.1.71:9000/api';
   final FlutterSecureStorage storage = new FlutterSecureStorage();
 
   ApiClient() {

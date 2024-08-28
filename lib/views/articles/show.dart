@@ -5,16 +5,47 @@ import 'package:guidpro_mobile/models/article.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class ArticleShow extends StatelessWidget {
+class ArticleShow extends StatefulWidget {
   final Advice advice;
 
   ArticleShow({required this.advice});
 
   @override
+  _ArticleShowState createState() => _ArticleShowState();
+}
+
+class _ArticleShowState extends State<ArticleShow> {
+  List<Comment> _comments = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _comments = [
+      Comment(
+        username: "Jean",
+        rating: 4.5,
+        comment: "Très utile et bien expliqué!",
+      ),
+      Comment(
+        username: "Fatima",
+        rating: 4.0,
+        comment: "Bon article, mais quelques points pourraient être améliorés.",
+      ),
+    ];
+  }
+
+  void _addComment(String username, double rating, String comment) {
+    setState(() {
+      _comments.add(Comment(username: username, rating: rating, comment: comment));
+    });
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(advice.title),
+        title: Text(widget.advice.title),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -26,7 +57,7 @@ class ArticleShow extends StatelessWidget {
                   height: 200,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(advice.coverUrl),
+                      image: NetworkImage(widget.advice.coverUrl),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.circular(10),
@@ -46,7 +77,7 @@ class ArticleShow extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        advice.title,
+                        widget.advice.title,
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.white,
@@ -55,7 +86,7 @@ class ArticleShow extends StatelessWidget {
                       ),
                       SizedBox(height: 1),
                       Text(
-                        "Budget : " + advice.budget.toString() + " XOF",
+                        "Budget : " + widget.advice.budget.toString() + " XOF",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -102,7 +133,7 @@ class ArticleShow extends StatelessWidget {
                   ),
                   InfoCard(
                     icon: Icons.date_range,
-                    value: convertToLocalDate(advice.publishedAt),
+                    value: convertToLocalDate(widget.advice.publishedAt),
                     label: "Publié le",
                   ),
                 ],
@@ -112,7 +143,7 @@ class ArticleShow extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                advice.description,
+                widget.advice.description,
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black87,
@@ -130,7 +161,7 @@ class ArticleShow extends StatelessWidget {
                 ),
               ),
             ),
-            ...advice.sections
+            ...widget.advice.sections
                 .map((section) => CollapsibleSection(
                       title: "Titre : " + section.title,
                       content: section.content,
@@ -142,19 +173,9 @@ class ArticleShow extends StatelessWidget {
               adviserRole: "Conseiller en Agriculture",
               adviserContact: "d"
             ),
-            CommentSection(comments: [
-              Comment(
-                username: "Jean",
-                rating: 4.5,
-                comment: "Très utile et bien expliqué!",
-              ),
-              Comment(
-                username: "Fatima",
-                rating: 4.0,
-                comment: "Bon article, mais quelques points pourraient être améliorés.",
-              ),
-            ]),
-            Composer(), // Composer widget here
+            CommentSection(comments: _comments),
+            Composer(onSubmit: _addComment)
+           // Composer widget here
           ],
         ),
       ),
@@ -162,7 +183,16 @@ class ArticleShow extends StatelessWidget {
   }
 }
 
-class Composer extends StatelessWidget {
+class Composer extends StatefulWidget {
+  final Function(String, double, String) onSubmit;
+
+  Composer({required this.onSubmit});
+
+  @override
+  _ComposerState createState() => _ComposerState();
+}
+
+class _ComposerState extends State<Composer> {
   final TextEditingController _commentController = TextEditingController();
   double _rating = 0;
 
@@ -183,7 +213,9 @@ class Composer extends StatelessWidget {
               color: Colors.amber,
             ),
             onRatingUpdate: (rating) {
-              _rating = rating;
+              setState(() {
+                _rating = rating;
+              });
             },
           ),
           SizedBox(height: 8),
@@ -198,7 +230,6 @@ class Composer extends StatelessWidget {
           SizedBox(height: 8),
           ElevatedButton(
             onPressed: () {
-              // Handle the submission of the comment and rating
               String comment = _commentController.text;
               
               if (comment.isEmpty) {
@@ -209,7 +240,18 @@ class Composer extends StatelessWidget {
                 );
                 return;
               }
-              // Submit the comment and rating (_rating) to the backend or API
+
+              // Appel de la fonction callback pour ajouter le commentaire
+              widget.onSubmit("MOI", _rating, comment);
+              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('commentaire fait avec succès')),
+                                );
+
+              // Clear le champ de texte après soumission
+              _commentController.clear();
+              setState(() {
+                _rating = 0;
+              });
             },
             child: Text("Soumettre"),
           ),
@@ -218,7 +260,6 @@ class Composer extends StatelessWidget {
     );
   }
 }
-
 class CommentSection extends StatelessWidget {
   final List<Comment> comments;
 
